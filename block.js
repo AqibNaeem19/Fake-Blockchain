@@ -38,3 +38,5 @@ console.log(' I am the block created ', block1);
 
 const result = Block.mineBlock({prevBlock: block1, data: "block data 2", });
 console.log('Newly mined block', result)
+
+module.exports = Block;
