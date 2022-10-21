@@ -28,14 +28,14 @@ class Blockchain{
     if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
 
     for( let i = 1; i < chain.length; i++){
-      const { timestamp, prevHash, hash, data } = chain[i];
+      const { timestamp, prevHash, hash, data, nonce, difficulty } = chain[i];
 
       // Check prevHash of block with the hash of block behind it.
       const realLastHash = chain[i - 1].hash;
       if( prevHash !== realLastHash) return false;
 
       // Compares the hash of block with newly calculated hash of that block.
-      const validatedHash = cryptoHash(timestamp, prevHash, data);
+      const validatedHash = cryptoHash(timestamp, prevHash, data, nonce, difficulty);
       if( hash !== validatedHash) return false;
 
       return true;
@@ -67,8 +67,5 @@ class Blockchain{
 
 const blockchain = new Blockchain();
 blockchain.addBlock({ data: 'Block number 1'});
-const result = Blockchain.isValidChain( blockchain.chain );
-console.log('Chain validation : ', result);
-// console.log(blockchain);
 
 module.exports = Blockchain;
