@@ -20,6 +20,9 @@ class Blockchain{
     this.chain.push(newBlock);
   }
 
+  /*
+    Function to check the validation of chain.
+  */
   static isValidChain(chain){
     // Checks if the genesis block is same as the first block of blockchain.
     if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
@@ -38,6 +41,27 @@ class Blockchain{
       return true;
 
     }
+  }
+
+  /*
+    LONGEST CHAIN PROBLEM :
+    If the length of the chain is shorter than the present chain, then
+    dont replace the real chain with the incoming chain. 
+    If the incoming chain is not valid, then dont replace the incoming
+    chain with the present chain.
+    Otherwise replace the current chain with the incoming chain.
+  */
+  replaceChain(chain){
+    if ( chain <= this.chain.length){
+      console.error('The incoming chain is not longer');
+      return ;
+    }
+    if(!Blockchain.isValidChain(chain)){
+      console.error('The incoming chain is not valid');
+      return ;
+    }
+    // Replace the chain with the longest chain.
+    this.chain = chain;
   }
 }
 
